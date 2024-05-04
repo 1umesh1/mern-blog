@@ -4,6 +4,12 @@ const express = require('express')
 const PORT = process.env.PORT || 8000
 const {MongoClient} =require("mongodb");
 
+
+// Server production assests
+if(process.env.Node_Env === "production"){
+    app.user(express.static(path.join("frontend/build")))
+    app.get("*", (req,res) => res.sendFile(path.resolve(__dirname, "client", "build","index.html")))
+}
 const articlesInfo ={
     "learn-react":{
         comments:[],
