@@ -4,8 +4,7 @@
   "description": "Mern app to develop fullstack",
   "homepage": "https://github.com/1umesh1/MERNblog",
   "main": "server.js",
-  "scripts": { 
-     
+  "scripts": {
     "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\"",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server \" \"npm run client\"",
