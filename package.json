@@ -4,17 +4,12 @@
   "description": "Mern app to develop fullstack",
   "homepage": "https://github.com/1umesh1/MERNblog",
   "main": "server.js",
-  "scripts": {
-    "build": "cd client && npm run build",
-    "install-client": "cd client && npm install",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
-    "server": "nodemon server.js",
-    "develop": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\"",
+  "scripts": { 
+     
     "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\"",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server \" \"npm run client\""
+    "dev": "concurrently \"npm run server \" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "keywords": [],
   "author": "Tech",
