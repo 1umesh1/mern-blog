@@ -20,7 +20,7 @@ const Article = () => {
         const body= await result.json();
         console.log(body);
         setArticleInfo(body);
-    }; fetchdata();},[name]);
+    }; fetchdata()},[name]);
 
     if(!article){
         return <NotFound/>
