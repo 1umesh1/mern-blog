@@ -1,10 +1,15 @@
 
+
+require("dotenv").config();
 const express = require('express')
  const app = express();
 const PORT = process.env.PORT || 8000
 const {MongoClient} =require("mongodb");
+// next two lines tells parse requests of content-type
+// which are application/x-www-form-urlencoded and json respectively
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-require("dotenv").config();
 // Server production assests
 // Accessing the path module
 const path = require("path");
