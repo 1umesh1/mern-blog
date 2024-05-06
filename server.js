@@ -3,12 +3,14 @@
 require("dotenv").config();
 const express = require('express')
  const app = express();
-const PORT = process.env.PORT || 8000 
+const PORT = process.env.PORT || 8000
+const cors = require("cors");
 const {MongoClient} =require("mongodb");
 // next two lines tells parse requests of content-type
 // which are application/x-www-form-urlencoded and json respectively
 app.use(express.urlencoded({ extended: false }));
-app.use(express.json()); 
+app.use(express.json());
+app.use(cors());
 
 // Server production assests
 // Accessing the path module
@@ -107,13 +109,13 @@ MongoClient.connect(process.env.MONGO_URI).catch((err) => console.log(err))
 
     if(process.env.NODE_ENV==="production"){
         // Step 1:
-        app.use(express.static("/client/build"));
+        app.use(express.static(path.resolve(__dirname, "./client/build")));
         // Step 2:
-        app.get("*", (request, response)=> {
-          response.sendFile(path.resolve(__dirname, "client","build", "index.html"));
+        app.get("*", function (request, response) {
+          response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
         });
         }
     
         
-     app.listen(process.env.PORT|| 8000,()=> console.log(`Server stared at port ${PORT}`));
+     app.listen(process.env.PORT||8000,()=> console.log(`Server stared at port ${PORT}`));
  })
