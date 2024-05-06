@@ -4,6 +4,7 @@ require("dotenv").config();
 const express = require('express')
  const app = express();
 const PORT = process.env.PORT || 8000
+const cors = require("cors");
 const {MongoClient} =require("mongodb");
 // next two lines tells parse requests of content-type
 // which are application/x-www-form-urlencoded and json respectively
