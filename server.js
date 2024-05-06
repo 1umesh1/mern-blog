@@ -7,8 +7,9 @@ const PORT = process.env.PORT || 8000
 const {MongoClient} =require("mongodb");
 // next two lines tells parse requests of content-type
 // which are application/x-www-form-urlencoded and json respectively
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(cors());
 
 // Server production assests
 // Accessing the path module
@@ -52,7 +53,7 @@ const articlesInfo ={
 // function of express. It parses incoming JSON payload
 app.use(express.json({extended:false}));
 
-
+MongoClient.connect(process.env.MONGO_URI).catch((err) => console.log(err))
 
  //just a test route for now
 //  app.get('/', (req,res)=> res.send(`Hello, World!`));
