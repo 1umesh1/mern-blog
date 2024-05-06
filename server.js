@@ -27,14 +27,7 @@ const path = require("path");
 
 // }
 
-if(process.env.NODE_ENV==="production"){
-// Step 1:
-app.use(express.static(path.resolve(__dirname, "./client/build")));
-// Step 2:
-app.get("*", function (request, response) {
-  response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
-});
-}
+
 
 
 const articlesInfo ={
@@ -62,7 +55,6 @@ MongoClient.connect(process.env.MONGO_URI).catch((err) => console.log(err))
 //  app.post('/', (req,res)=> res.send(`Hello, ${req.body.name}!`));
 
 
- app.listen(PORT,()=> console.log(`Server stared at port ${PORT}`));
 
  const withDB = async(operations,res )=> {
     try{ 
@@ -70,8 +62,10 @@ MongoClient.connect(process.env.MONGO_URI).catch((err) => console.log(err))
     const db = client.db("db_umesk");
      await operations(db);
      client.close;  
+     console.log("Successfully db connected " + process.env.MONGO_URI);
     } catch(error){
-        res.status(500).json({message:"Error connecting to db", error})
+        res.status(500).json({message:"Error connecting to db", error});
+        console.log(" db is not connected " + process.env.MONGO_URI);
     }
  }
 
@@ -109,5 +103,19 @@ MongoClient.connect(process.env.MONGO_URI).catch((err) => console.log(err))
         const updateArticleInfo= await db.collection('articles')
         .findOne({name:articleName});
         res.status(200).json(updateArticleInfo);
-    }, res)
+    }, res);
+
+
+
+    if(process.env.NODE_ENV==="production"){
+        // Step 1:
+        app.use(express.static("/client/build"));
+        // Step 2:
+        app.get("*", (request, response)=> {
+          response.sendFile(path.resolve(__dirname, "client","build", "index.html"));
+        });
+        }
+    
+        
+     app.listen(process.env.PORT|| 8000,()=> console.log(`Server stared at port ${PORT}`));
  })
