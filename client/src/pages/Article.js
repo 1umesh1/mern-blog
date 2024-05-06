@@ -16,15 +16,11 @@ const Article = () => {
 
    useEffect(()=> {
     const fetchdata = async()=>{
-        const result = await fetch(`/api/articles/${name}`
-        , {  
-            headers: {  
-              Accept: "application/json"  
-            }});
+        const result = await fetch(`/api/articles/${name}`);
         const body= await result.json();
         console.log(body);
         setArticleInfo(body);
-    }; fetchdata()},[name]);
+    }; fetchdata();},[name]);
 
  
 
