@@ -1,6 +1,9 @@
 {
   "name": "mern-blog",
   "version": "1.0.0",
+  "engines":{
+    "node": "18.17.1"
+  },
   "description": "Mern app to develop fullstack",
   "homepage": "https://github.com/1umesh1/MERNblog",
   "main": "server.js",
@@ -13,7 +16,7 @@
     "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix client\"",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server \" \"npm run client\"",
-    "heroku-postbuild": "NODE_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "keywords": [],
   "author": "Tech",
