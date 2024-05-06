@@ -4,17 +4,22 @@ const express = require('express')
 const PORT = process.env.PORT || 8000
 const {MongoClient} =require("mongodb");
 
-
+require("dotenv").config();
 // Server production assests
 // Accessing the path module
 const path = require("path");
 
-// // Step 1:
-// app.use(express.static(path.resolve(__dirname, "./client/build")));
-// // Step 2:
-// app.get("*", function (request, response) {
-//   response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
-// });
+
+if(process.env.NODE_ENV==="production"){
+// Step 1:
+app.use(express.static(("/client/build")));
+// Step 2:
+app.get("*", function (request, response) {
+  response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
+});
+
+}
+
 
 
 const articlesInfo ={
@@ -37,16 +42,16 @@ app.use(express.json({extended:false}));
 
 
  //just a test route for now
- app.get('/', (req,res)=> res.send(`Hello, World!`));
- app.get('/hello/:name', (req,res)=> res.send(`Hello ${req.params.name}`));
- app.post('/', (req,res)=> res.send(`Hello, ${req.body.name}!`));
+//  app.get('/', (req,res)=> res.send(`Hello, World!`));
+//  app.get('/hello/:name', (req,res)=> res.send(`Hello ${req.params.name}`));
+//  app.post('/', (req,res)=> res.send(`Hello, ${req.body.name}!`));
 
 
  app.listen(PORT,()=> console.log(`Server stared at port ${PORT}`));
 
  const withDB = async(operations,res )=> {
     try{ 
-    const client = await MongoClient.connect('mongodb+srv://omeshumesh060:omeshumesh060@mernblog.0kf1ro0.mongodb.net/');
+    const client = await MongoClient.connect(process.env.MONGO_URI);
     const db = client.db("db_umesk");
      await operations(db);
      client.close;  
