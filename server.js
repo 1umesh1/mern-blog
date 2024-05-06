@@ -3,14 +3,12 @@
 require("dotenv").config();
 const express = require('express')
  const app = express();
-const PORT = process.env.PORT || 8000
-const cors = require("cors");
+const PORT = process.env.PORT || 8000 
 const {MongoClient} =require("mongodb");
 // next two lines tells parse requests of content-type
 // which are application/x-www-form-urlencoded and json respectively
 app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-app.use(cors());
+app.use(express.json()); 
 
 // Server production assests
 // Accessing the path module
