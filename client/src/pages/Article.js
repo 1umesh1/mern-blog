@@ -68,14 +68,6 @@ useEffect(() => {
 }, [name]);
 
 
-    fetchData();
-
-    // Clean up function
-    return () => {
-        // Cleanup code here if needed
-    };
-}, [name]);
-
 
     if(!article){
         return <NotFound/>
