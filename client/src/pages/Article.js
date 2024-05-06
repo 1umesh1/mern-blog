@@ -45,7 +45,11 @@ useEffect(() => {
             if (contentType && contentType.includes('application/json')) {
                 const body = await result.json();
                 console.log(body);
-                setArticleInfo(body);
+                if (Array.isArray(body)) {
+                    setArticleInfo(body);
+                } else {
+                    throw new Error('Response is not an array');
+                }
             } else {
                 throw new Error('Response is not in JSON format');
             }
@@ -54,6 +58,15 @@ useEffect(() => {
             // Handle the error here
         }
     };
+
+    fetchData();
+
+    // Clean up function
+    return () => {
+        // Cleanup code here if needed
+    };
+}, [name]);
+
 
     fetchData();
 
