@@ -14,17 +14,55 @@ const Article = () => {
     const article = articleContent.find((article)=> article.name===name); 
    const [articleInfo, setArticleInfo] = useState({comments:[]});
 
-   useEffect(()=> {
-    const fetchdata = async()=>{
-        const result = await fetch(`/api/articles/${name}`
-        , {  
-            headers: {  
-              Accept: "application/json"  
-            }});
-        const body= await result.json();
-        console.log(body);
-        setArticleInfo(body);
-    }; fetchdata()},[name]);
+//    useEffect(()=> {
+//     const fetchdata = async()=>{
+//         const result = await fetch(`/api/articles/${name}`
+//         , {  
+//             headers: {  
+//               Accept: "application/json"  
+//             }});
+//         const body= await result.json();
+//         console.log(body);
+//         setArticleInfo(body);
+//     }; fetchdata()},[name]);
+
+
+useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const result = await fetch(`/api/articles/${name}`, {
+                headers: {
+                    Accept: "application/json"
+                }
+            });
+            
+            if (!result.ok) {
+                throw new Error('Failed to fetch data');
+            }
+            
+            const contentType = result.headers.get('content-type');
+            
+            if (contentType && contentType.includes('application/json')) {
+                const body = await result.json();
+                console.log(body);
+                setArticleInfo(body);
+            } else {
+                throw new Error('Response is not in JSON format');
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            // Handle the error here
+        }
+    };
+
+    fetchData();
+
+    // Clean up function
+    return () => {
+        // Cleanup code here if needed
+    };
+}, [name]);
+
 
     if(!article){
         return <NotFound/>
